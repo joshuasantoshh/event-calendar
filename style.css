@@ -1,0 +1,70 @@
+/* styles.css - custom styles for Holiday Planner */
+
+body {
+  padding-top: 1rem;
+  padding-bottom: 4rem;
+  background: #f8f9fa;
+  color: #222;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.destination-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+}
+
+.destination-card .card-body {
+  min-height: 120px;
+}
+
+.selected {
+  border: 2px solid #0d6efd !important;
+  box-shadow: 0 0 10px rgba(13, 110, 253, 0.12);
+}
+
+.small-note {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.sidebar {
+  position: relative;
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    order: 2;
+  }
+  .main-area {
+    order: 1;
+  }
+}
+
+/* Activity button styling */
+.activity-btn {
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #d0d7de;
+  background: transparent;
+  white-space: nowrap;
+}
+
+.activity-btn.active {
+  background-color: #0d6efd;
+  color: #fff;
+  border-color: #0d6efd;
+}
+
+/* Itinerary list styling */
+#itineraryList .list-group-item {
+  border-left: 4px solid #0d6efd;
+}
+
+#itineraryList .list-group-item .small-note {
+  color: #888;
+}

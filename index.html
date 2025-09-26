@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Holiday Planner</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container py-3">
+    <header class="d-flex align-items-center mb-3">
+      <h1 class="me-auto">Holiday Planner</h1>
+      <div class="text-end small-note">Mobile-first responsive planner</div>
+    </header>
+
+    <div class="row g-3">
+      <!-- LEFT: Search & Results -->
+      <div class="col-lg-8 main-area">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5>Find a destination</h5>
+            <div class="row g-2 align-items-center">
+              <div class="col-md-6">
+                <select id="interestFilter" class="form-select" aria-label="Filter by interest">
+                  <option value="all">All interests</option>
+                  <option value="beach">Beach</option>
+                  <option value="mountain">Mountain</option>
+                  <option value="city">City</option>
+                  <option value="adventure">Adventure</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <input id="searchBox" class="form-control" placeholder="Search destinations (name or country)" aria-label="Search destinations">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="destinationsRow" class="row row-cols-1 row-cols-md-2 g-3"></div>
+
+        <!-- Accommodation / Transport selectors -->
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5>Accommodation & Transport</h5>
+            <div class="row gy-2">
+              <div class="col-md-6">
+                <label class="form-label" for="accommodationSelect">Accommodation</label>
+                <select id="accommodationSelect" class="form-select">
+                  <option value="none" data-price="0">None</option>
+                  <option value="3star" data-price="80">3-star hotel — ₹80/night</option>
+                  <option value="4star" data-price="140">4-star hotel — ₹140/night</option>
+                  <option value="5star" data-price="260">5-star hotel — ₹260/night</option>
+                  <option value="apartment" data-price="70">Apartment — ₹70/night</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="transportSelect">Transport</label>
+                <select id="transportSelect" class="form-select">
+                  <option value="none" data-price="0">None</option>
+                  <option value="economy" data-price="200">Flight (Economy) — ₹200</option>
+                  <option value="business" data-price="800">Flight (Business) — ₹800</option>
+                  <option value="train" data-price="60">Train — ₹60</option>
+                  <option value="car" data-price="40">Car rental — ₹40/day</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity planner -->
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5>Activities</h5>
+            <div id="activitiesList" class="d-flex flex-wrap gap-2" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Itinerary + Budget -->
+      <aside class="col-lg-4 sidebar">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5>Create trip itinerary</h5>
+            <div class="mb-2">
+              <label class="form-label" for="tripName">Trip name</label>
+              <input id="tripName" class="form-control" placeholder="e.g. Summer Italy 2026">
+            </div>
+            <div class="row g-2 mb-2">
+              <div class="col-6">
+                <label class="form-label" for="startDate">Start date</label>
+                <input id="startDate" type="date" class="form-control">
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="endDate">End date</label>
+                <input id="endDate" type="date" class="form-control">
+              </div>
+            </div>
+
+            <hr>
+            <h6>Add activity to itinerary</h6>
+            <div class="mb-2">
+              <label class="form-label" for="activityTitle">Activity</label>
+              <input id="activityTitle" class="form-control" placeholder="Activity title">
+            </div>
+            <div class="mb-2 row g-2">
+              <div class="col-6"><input id="activityDate" type="date" class="form-control"></div>
+              <div class="col-6"><input id="activityTime" type="time" class="form-control"></div>
+            </div>
+            <div class="mb-2">
+              <label class="form-label" for="activityCost">Estimated cost</label>
+              <input id="activityCost" type="number" min="0" class="form-control" placeholder="0">
+            </div>
+            <button id="addActivityBtn" class="btn btn-primary w-100">Add to itinerary</button>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5>Trip Itinerary</h5>
+            <div id="itineraryList" class="list-group mb-2" style="max-height: 320px; overflow:auto"></div>
+            <button id="saveTripBtn" class="btn btn-success w-100 mb-2">Save trip (LocalStorage)</button>
+            <button id="clearTripBtn" class="btn btn-outline-danger w-100">Clear</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5>Budget Tracker</h5>
+            <p class="small-note">Automatic estimate from chosen items</p>
+            <ul class="list-unstyled">
+              <li>Transport: <span id="budgetTransport">₹0</span></li>
+              <li>Accommodation: <span id="budgetAccommodation">₹0</span></li>
+              <li>Activities: <span id="budgetActivities">₹0</span></li>
+              <li class="mt-2 fw-bold">Total: <span id="budgetTotal">₹0</span></li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="mt-4 text-center small-note">Built with HTML, Bootstrap, JavaScript & jQuery — responsive</footer>
+  </div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- App JS -->
+  <script src="script.js"></script>
+</body>
+</html>
